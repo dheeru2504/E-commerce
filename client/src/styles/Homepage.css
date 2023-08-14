@@ -1,0 +1,117 @@
+.banner-img {
+  margin-top: 0px;
+ 
+}
+/* .container-fluid{
+  margin-left: 0 !important;
+   padding: 0;
+
+} */
+
+.home-page h1 {
+  color: #007185;
+  font-family: "Playfair Display", serif;
+  
+  margin: 25px;
+}
+
+.home-page {
+  display: flex;
+  flex-wrap: wrap;
+}
+.home-page .card {
+  background-color: #f3f5f6;
+  width: 18rem;
+  border: none;
+  font-family: 'Josefin Sans', sans-serif;
+ 
+}
+/* .home-page .card-name-price {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+} */
+.title a{
+  font-weight: bold;
+  text-decoration: none ;
+  color: black ;
+}
+.title a:hover{
+  color: #19A7CE;
+}
+.home-page .card-price {
+  color: black;
+  font-weight: bold;
+  /* font-family: 'Josefin Sans', sans-serif; */
+}
+
+.home-page button {
+  border-radius: 0;
+  width: 100%;
+  border-top-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  /* font-family: 'Josefin Sans', sans-serif; */
+}
+
+
+.home-page .card-text {
+  color: rgb(90, 89, 89);
+}
+
+.home-page .card img:hover {
+  transform: scale(0.9);
+}
+
+.home-page .card-img-top {
+  height: 280px !important;
+  width: 280px !important;
+ 
+}
+/* ==================
+filters
+============== */
+.filters{
+  font-family: 'Josefin Sans', sans-serif !important;
+ 
+}
+.filters h4 {
+  margin-top: 100px;
+  color: #007185 !important;
+  border-bottom: 1px solid #DAF5FF;
+}
+
+.ant-checkbox-wrapper:first-of-type {
+  margin-left: 8px;
+}
+
+.ant-checkbox-wrapper {
+  margin: 2px;
+  color: #007185;
+}
+.ant-radio-wrapper {
+  margin-bottom: 5px !important;
+  margin-left: 10px;
+  color: #007185;
+}
+
+.filters button {
+  background-color: #DAF5FF;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+  margin-top: 20px;
+  color: #007185;
+}
+.filters button a:hover{
+  background-color: #007185 !important;
+}
+
+.loadmore {
+  color: #007185;
+  font-weight: bold;
+  font-size: 20px !important;
+  
+}

@@ -32,7 +32,7 @@ const app = express();
 
 
 const corsOptions ={
-  origin:'https://e-commerce-frontend-nu-nine.vercel.app/', 
+  origin:'https://e-commerce-frontend-nu-nine.vercel.app', 
   method:"GET,POST,PUT,DELETE",
   credentials:true,            //access-control-allow-credentials:true
   optionSuccessStatus:200,

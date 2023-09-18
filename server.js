@@ -16,18 +16,18 @@ dotenv.config();
 
 //database configuration
 
-// try {
-//   const conn = await mongoose.connect(process.env.MONGO_URL, {
-//     useNewUrlParser: true,
-//   });
-//   //console.log(`connected to Mongodb Database ${conn.connection.host}`);
-// } catch (error) {
-//   // console.log(`Error in Mongodb ${error}`.bgRed.white);
-// }
+try {
+  const conn = await mongoose.connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+  });
+  //console.log(`connected to Mongodb Database ${conn.connection.host}`);
+} catch (error) {
+  // console.log(`Error in Mongodb ${error}`.bgRed.white);
+}
 
 //rest object
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 
 
@@ -41,8 +41,8 @@ const corsOptions = {
 //middlewares
 app.use(cors(corsOptions));
 app.use(express.json()); //earlier we uses body parser
-// app.use(morgan("dev"));
-// app.use(express.static(path.join(__dirname, "./client/build")));
+app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, "./client/build")));
 
 //routes
 app.use("/api/v1/auth", authRoutes);
@@ -53,9 +53,9 @@ app.use("/api/v1/product", productRoutes);
 //   res.json("hello");
 // })
 //rest api
-// app.use("*", function (req, res) {
-//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
-// });
+app.use("*", function (req, res) {
+  res.sendFile(path.join(__dirname, "./client/build/index.html"));
+});
 
 //port number
 const PORT = process.env.PORT || 8080;

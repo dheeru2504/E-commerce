@@ -32,7 +32,7 @@ const app = express();
 
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: 'https://front-dv26.onrender.com',
   method: "GET,POST,PUT,DELETE",
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,

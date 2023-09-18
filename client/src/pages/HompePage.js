@@ -170,14 +170,14 @@ const HomePage = () => {
             {products?.map((p) => (
               <div className="card m-2 text-center" key={p._id}>
                 <img
-                  src={`https://backend-k2am.onrender.com/api/v1/product/product-photo/${p._id}`}
+                  src={`/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />
                 <div className="card-body">
                   <div className="card-name-price  ">
                     <h5 className="card-title title">
-                      <Link to={`https://backend-k2am.onrender.com/product/${p.slug}`}>{p.name}</Link>
+                      <Link to={`/product/${p.slug}`}>{p.name}</Link>
                     </h5>
                     <h5 className="card-title card-price">
                       ₹ {p.price}
@@ -193,7 +193,7 @@ const HomePage = () => {
                   <div className="card-name-price">
                     {/* <button
                       className="btn btn-outline-info ms-1"
-                      onClick={() => navigate(`https://backend-k2am.onrender.com/product/${p.slug}`)}
+                      onClick={() => navigate(`/product/${p.slug}`)}
                     >
                       Details
                     </button> */}

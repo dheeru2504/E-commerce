@@ -5,6 +5,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../styles/ProductDetailsStyles.css";
 import { useCart } from "../context/cart";
 import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 const ProductDetails = () => {
   const params = useParams();
@@ -22,7 +23,7 @@ const ProductDetails = () => {
   const getProduct = async () => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/get-product/${params.slug}`
+        `${process.env.REACT_APP_API}api/v1/product/get-product/${params.slug}`
       );
       setProduct(data?.product);
       getSimilarProduct(data?.product._id, data?.product.category._id);
@@ -34,7 +35,7 @@ const ProductDetails = () => {
   const getSimilarProduct = async (pid, cid) => {
     try {
       const { data } = await axios.get(
-        `/api/v1/product/related-product/${pid}/${cid}`
+        `${process.env.REACT_APP_API}api/v1/product/related-product/${pid}/${cid}`
       );
       setRelatedProducts(data?.products);
     } catch (error) {
@@ -46,25 +47,27 @@ const ProductDetails = () => {
       <div className="row container product-details">
         <div className="col-md-6">
           <img
-            src={`/api/v1/product/product-photo/${product._id}`}
+            src={`${process.env.REACT_APP_API}api/v1/product/product-photo/${product._id}`}
             className="ms-5"
             alt={product.name}
-            height="300px"
-            width={"300"}
+            height="100%"
+            width="80%"
           />
         </div>
-        <div className="col-md-6 product-details-info">
-          <h1 className="text-center">Product Details</h1>
-          <hr />
-          <h6>Name : {product.name}</h6>
-          <h6>Description : {product.description}</h6>
-          <h6>
+        <div className="col-md-6 product-details-info ">
+          <h1 className="">{product.name}</h1>
+          {/* <hr /> */}
+          <h3 className="">
             Price : ₹ {product.price}
             {/* {product?.price?.toLocaleString("en-US", {
               style: "currency",
               currency: "INR",
             })} */}
-          </h6>
+          </h3>
+          {/* <h6>Name : {product.name}</h6> */}
+
+          <h6> {product.description}</h6>
+
           <h6>Category : {product?.category?.name}</h6>
           <button
             class="btn btn-secondary ms-1"
@@ -86,36 +89,35 @@ const ProductDetails = () => {
         )}
         <div className="d-flex flex-wrap">
           {relatedProducts?.map((p) => (
-            <div className="card m-2" key={p._id}>
-              <img
-                src={`/api/v1/product/product-photo/${p._id}`}
-                className="card-img-top"
-                alt={p.name}
-                height="280px"
-                width={"280"}
-              />
-              <div className="card-body">
-                <div className="card-name-price">
-                  <h5 className="card-title">{p.name}</h5>
-                  <h5 className="card-title card-price">
-                    ₹ {p.price}
-                    {/* {p.price.toLocaleString("en-US", {
+            <Link to={`/product/${p.slug}`} style={{ color: "grey", textDecoration: "none" }}>
+              <div className="card m-2" key={p._id}>
+                <img
+                  src={`${process.env.REACT_APP_API}api/v1/product/product-photo/${p._id}`}
+                  className="card-img-top"
+                  alt={p.name}
+                />
+                <div className="card-body">
+                  <div className="card-name-price">
+                    <h5 className="card-title">{p.name.substring(0, 30)}</h5>
+                    <h5 className="card-title card-price">
+                      ₹{p.price}
+                      {/* {p.price.toLocaleString("en-US", {
                       style: "currency",
                       currency: "USD",
                     })} */}
-                  </h5>
-                </div>
-                <p className="card-text ">
-                  {p.description.substring(0, 30)}...
-                </p>
-                <div className="card-name-price">
-                  <button
-                    className="btn btn-info ms-1"
-                    onClick={() => navigate(`/product/${p.slug}`)}
-                  >
-                    More Details
-                  </button>
-                  {/* <button
+                    </h5>
+                  </div>
+                  <p className="card-text ">
+                    {p.description.substring(0, 30)}...
+                  </p>
+                  <div className="card-name-price">
+                    <button
+                      className="btn btn-info ms-1"
+                      onClick={() => navigate(`/product/${p.slug}`)}
+                    >
+                      More Details
+                    </button>
+                    {/* <button
                   className="btn btn-dark ms-1"
                   onClick={() => {
                     setCart([...cart, p]);
@@ -128,9 +130,10 @@ const ProductDetails = () => {
                 >
                   ADD TO CART
                 </button> */}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

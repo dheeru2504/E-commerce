@@ -20,6 +20,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
         <Toaster />
         {children}
       </main>
+      {/* <hr /> */}
       <Footer />
     </div>
   );

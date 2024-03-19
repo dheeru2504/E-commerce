@@ -3,13 +3,15 @@
 /* @import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400&display=swap'); */
 
 
-*{
-  margin :0px;
+* {
+  margin: 0px;
   padding: 0;
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
-.font-type{
+
+
+.font-type {
   font-family: 'Josefin Sans', sans-serif;
   font-weight: bold;
 }
@@ -19,67 +21,283 @@
 /*font-family: 'Josefin Sans', sans-serif;*/
 
 /* Navbar */
-.navbar{
+.navbar {
   font-family: 'Poppins', sans-serif;
   font-size: 17px;
+  padding-top: 15px;
   line-height: 26px;
   /* text-transform: uppercase; */
-  box-shadow: 0 8px 6px -6px gray;
-  --webkit-box-shadow:var(0 8px 6px -6px gray);
-  border-bottom: solid gray !important;
+  box-shadow: 0 8px 6px -6px #4a5562;
+  --webkit-box-shadow: var(0 8px 6px -6px #4a5562);
+  border-bottom: #4a5562 !important;
 }
 
-.nav-link{
+.nav-link {
   font-weight: 300 !important;
 }
 
-.active{
+.logo {
+  height: 2.2rem;
+  width: 2.2rem;
+  /* padding-bottom: 1rem; */
+}
+
+.active {
   border-bottom: 0px solid black;
   font-weight: 900;
 }
-.navbar-brand{
-  font-weight:600px !important;
+
+.navbar-brand {
+  font-weight: 600px !important;
   font-size: 16px;
   font-family: 'roboto', sans-serif;
   letter-spacing: 2px;
   color: #19A7CE;
- 
+
 }
-.navbar-brand a:hover{
+
+.navbar-brand a:hover {
   color: #19A7CE !important;
 
 }
+
+/*===========================
+**********carousel ********/
+.carousel-section {
+  max-height: 100%;
+  max-width: 100%;
+  /* background: rgb(255, 255, 255); */
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 47%, rgba(163, 233, 246, 1) 200%);
+  /* margin: 2rem;
+  border-radius: 2rem; */
+}
+
+.carousel-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.carousel-text {
+  /* margin-right: 10rem; */
+  text-align: center;
+  /* display: flex; */
+  justify-content: center;
+}
+
+.carousel-img {
+  padding-top: 1rem;
+  max-width: 30%;
+  max-height: 35rem;
+  /* position: relative; */
+}
+
+.strikethrough {
+  text-decoration: line-through;
+}
+
 /*==============================
 ******** footer***************** */
-.footer{
+.footer {
   font-family: 'Josefin Sans', sans-serif;
+  /* position: absolute; */
   font-weight: bold;
-  color:black;
+  color: #5f6368;
   padding: 25px;
-  background: #97DEFF;
-  background-image: url("../public/images/bg-auth.jpg");
+  /* background: #97DEFF; */
+  /* background: rgb(191, 232, 240); */
+  /* background-image: url("../public/images/bg-auth.jpg"); */
   /* background: --webkit-linear-gradient(
     to right,
     skyblue,
   );
   background: linear-gradient(to right, #434343,rgb(62, 61, 61));  */
   font-family: 'Josefin Sans', sans-serif;
+
 }
 
-.footer a{
+.footer a {
   text-decoration: none;
-  color: black;
+  color: #5f6368;
   padding: 10px;
 }
 
-.footer a:hover{
-  color: #19A7CE;
-  border-bottom: 1px solid #19A7CE;
+
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: #5f6368;
+}
+
+.hover-underline-animation::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+
+  bottom: 10px;
+  left: 0;
+  background-color: #5f6368;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/*--------------------------------------------------------------
+# Container
+--------------------------------------------------------------*/
+.container_section {
+  margin: 3rem 8rem 3rem 8rem;
+  font-family: 'Josefin Sans', sans-serif;
+
+}
+
+.container_section p {
+  font-size: 18px;
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+#footer {
+  background: #4a5562;
+  /* padding: 0 0 30px 0; */
+  color: #fff;
+  font-size: 14px;
+}
+
+#footer .footer-top .container-fluid {
+  width: 94% !important;
+  /* margin: 50px !important; */
+  font-family: 'Josefin Sans', sans-serif;
+  font-weight: bold;
+}
+
+#footer .footer-top {
+  background: #515d6a;
+  padding: 40px 0 30px 0;
+}
+
+#footer .footer-top .footer-info {
+  margin-bottom: 30px;
+}
+
+#footer .footer-top .footer-info h3 {
+  font-size: 24px;
+  margin: 0 0 20px 0;
+  padding: 2px 0 2px 0;
+  line-height: 1;
+  font-weight: 700;
+}
+
+#footer .footer-top .footer-info p {
+  font-size: 14px;
+  line-height: 24px;
+  margin-bottom: 0;
+  /* font-family: "Raleway", sans-serif; */
+  color: #fff;
+}
+
+#footer .footer-top .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 4px;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+}
+
+#footer .footer-top .social-links a:hover {
+  background: #d9232d;
+  color: #fff;
+  text-decoration: none;
+}
+
+#footer .footer-top h4 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  position: relative;
+  padding-bottom: 12px;
+}
+
+#footer .footer-top .footer-links {
+  margin-bottom: 30px;
+}
+
+#footer .footer-top .footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+#footer .footer-top .footer-links ul li {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+#footer .footer-top .footer-links ul li:first-child {
+  padding-top: 0;
+}
+
+#footer .footer-top .footer-links ul a {
+  color: rgba(255, 255, 255, 0.6);
+  transition: 0.3s;
+  display: inline-block;
+  line-height: 1;
+  text-decoration: none;
+}
+
+#footer .footer-top .footer-links ul a:hover {
+  color: white;
+}
+
+
+
+
+
+#footer .copyright {
+  text-align: center;
+  padding-top: 30px;
+}
+
+#footer .credits {
+  padding-top: 10px;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+#footer .credits a {
+  color: rgba(255, 255, 255, 0.6);
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+#footer .credits a:hover {
+  color: white;
 }
 
 /*==============================
 ******** Page Not Found***************** */
-.pnf{
+.pnf {
   display: flex;
   min-height: 65vh;
   flex-direction: column;
@@ -88,15 +306,16 @@
   font-family: 'Josefin Sans', sans-serif;
 }
 
-.pnf-title{
+.pnf-title {
   font-size: 100px;
   font-weight: 700;
 }
-.pnf-heading{
+
+.pnf-heading {
   font-weight: normal;
 }
 
-.pnf-btn{
+.pnf-btn {
   color: black;
   border: 1px solid black;
   text-decoration: none;
@@ -113,42 +332,44 @@
 
 /*============================*/
 /* ***********Register ********** */
-.register{
-  background-image: url("../public/images/bg-auth.jpg");
+.register {
+  /* background-image: url("../public/images/bg-auth.jpg"); */
+  /* margin-top: 2rem; */
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70vh;
+  /* height: 70vh; */
   flex-direction: column;
+  margin: 2rem 2rem;
 }
 
-.register h1{
+.register h1 {
   font-family: 'Josefin Sans', sans-serif;
   font-weight: bolder;
 }
 
 /*photos in products*/
-.product-link{
+.product-link {
   text-decoration: none !important;
   color: #000000 !important;
 }
 
 /*About Page*/
-.about-page{
+.about-page {
   font-family: 'Josefin Sans', sans-serif;
   margin-top: 10px;
 }
 
 /*Contact US*/
 .contactus {
+
   font-family: 'Josefin Sans', sans-serif;
-  margin: 0;
+  margin-top: 2rem;
   padding: 0;
-  height: 70vh;
+  /* height: 70vh; */
   display: flex;
   align-items: center;
   justify-content: center;
   /* font-family:'Josefin Sans', sans-serif ; */
-  
-}
 
+}

@@ -25,6 +25,10 @@ import CategoryProduct from "./pages/CategoryProduct";
 import CartPage from "./pages/CartPage";
 import Orders from "./pages/user/Orders";
 import AdminOrders from "./pages/Admin/AdminOrders";
+import Faqs from "./pages/Faqs";
+import TermsOfUse from "./pages/TermsOfUse";
+import ReturnPolicy from "./pages/ReturnPolicy";
+import TrackShipment from "./pages/TrackShipment";
 
 function App() {
   return (
@@ -64,8 +68,12 @@ function App() {
           element={<ForgotPassword></ForgotPassword>}
         />
         <Route path="/about" element={<About />} />
+        <Route path="/faqs" element={<Faqs />} />
+        <Route path="/termsOfUse" element={<TermsOfUse />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />
+        <Route path="/return_policy" element={<ReturnPolicy />} />
+        <Route path="/track_shipment" element={<TrackShipment />} />
         <Route path="*" element={<Pagenotfound />} />
       </Routes>
     </>

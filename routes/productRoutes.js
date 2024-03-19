@@ -19,8 +19,9 @@ import express from "express";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 import formidable from "express-formidable";
 import {
-  brainTreePaymentController,
-  braintreeTokenController,
+  // brainTreePaymentController,
+  // braintreeTokenController,
+  createOrderController,
   createProductController,
   deleteProductController,
   getProductController,
@@ -33,6 +34,7 @@ import {
   realtedProductController,
   searchProductController,
   updateProductController,
+  verifyPaymentController,
 } from "../controllers/productController.js";
 
 const router = express.Router();
@@ -86,9 +88,14 @@ router.get("/product-category/:slug", productCategoryController);
 
 //payments routes
 //token
-router.get("/braintree/token", braintreeTokenController);
+// router.get("/braintree/token", braintreeTokenController);
 
 //payments
-router.post("/braintree/payment", requireSignIn, brainTreePaymentController);
+// router.post("/braintree/payment", requireSignIn, brainTreePaymentController);
+
+//create order for razor pay
+router.post("/create-order", requireSignIn, createOrderController);
+//verify payment
+router.post("/verify-payment", requireSignIn, verifyPaymentController);
 
 export default router;

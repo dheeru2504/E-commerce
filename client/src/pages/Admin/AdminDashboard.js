@@ -7,7 +7,7 @@ const AdminDashboard = () => {
   const [auth] = useAuth();
   return (
     <Layout title={"Admin-Dashboard"}>
-      <div className="container-fluid p-4 m-3 font-type">
+      <div className="container-fluid p-4 m-3 font-type" style={{ width: "97%" }}>
         <div className="row">
           <div className="col-md-3">
             <div>

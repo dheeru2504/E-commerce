@@ -10,6 +10,7 @@ import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
 import { useCart } from "../../context/cart";
 import { Badge } from "antd";
+import Logo from "../../assets/Logo.jpeg"
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -43,7 +44,7 @@ const Header = () => {
 
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand">
-              <RiShoppingCart2Line size={30} /> Shoppy
+              <img src={Logo} alt="" className="logo" /><span style={{ fontSize: "1.2rem" }}>Decor</span>
             </Link>
 
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
@@ -106,9 +107,8 @@ const Header = () => {
                     <ul className="dropdown-menu">
                       <li>
                         <NavLink
-                          to={`/dashboard/${
-                            auth?.user?.role === 1 ? "admin" : "user"
-                          }`}
+                          to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"
+                            }`}
                           className="dropdown-item"
                         >
                           Dashboard

@@ -9,7 +9,8 @@
   font-weight: normal;
   background-color: rgba(0, 0, 255, 0.072) !important;
 }
-.cart-page h1 > p {
+
+.cart-page h1>p {
   font-size: 20px;
   margin-top: 10px;
 }
@@ -19,44 +20,71 @@
   height: 150px !important;
   margin-bottom: 5px !important;
 }
+
 .cart-page .cart-remove-btn {
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .cart-page .cart-summary {
   text-align: center;
   /* margin-left: 100px; */
   /* margin-top: -140px !important; */
 }
 
-
+.cart-image {
+  width: 100%;
+  height: 100%;
+  padding: 0 2rem 2rem 0;
+}
 
 /*-----ORDERS-----------*/
 .orders {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
- 
+
 }
-.orders-card-body{
+
+.orders-card-body {
   display: flex;
   flex-direction: row;
-  justify-content:flex-start;
-  
+  justify-content: flex-start;
+
+}
+
+@media screen and (max-width: 546px) {
+  .orders-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* background-color: red; */
+
+  }
+
+  .orders {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .orders .headers-heading {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    /* background-color: red; */
+
+  }
+
+  .orders-card-body .card-detail {
+    margin: 1rem 0 0 0 !important;
+  }
 }
 
 /*********Category button *****/
-.cat-btn{
+.cat-btn {
   text-decoration: none;
   color: black;
   font-weight: bold;
-}
-
-/**********create category card *****/
-.category-card{
- 
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }

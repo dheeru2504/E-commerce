@@ -13,6 +13,7 @@ const CreateProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [SKU, setSKU] = useState("");
   const [category, setCategory] = useState("");
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
@@ -21,7 +22,7 @@ const CreateProduct = () => {
   //get all category
   const getAllCategory = async () => {
     try {
-      const { data } = await axios.get("/api/v1/category/get-category");
+      const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/category/get-category`);
       if (data?.success) {
         setCategories(data?.category);
       }
@@ -44,11 +45,12 @@ const CreateProduct = () => {
       productData.append("name", name);
       productData.append("description", description);
       productData.append("price", price);
+      productData.append("SKU", SKU);
       productData.append("quantity", quantity);
       productData.append("photo", photo);
       productData.append("category", category);
       const { data } = axios.post(
-        "/api/v1/product/create-product",
+        `${process.env.REACT_APP_API}api/v1/product/create-product`,
         productData
       );
       if (data?.success) {
@@ -123,6 +125,16 @@ const CreateProduct = () => {
                   placeholder="write a name"
                   className="form-control"
                   onChange={(e) => setName(e.target.value)}
+                />
+              </div>
+              <div className="mb-3">
+                <input
+                  style={{ border: "1px solid grey" }}
+                  type="text"
+                  value={SKU}
+                  placeholder="SKU"
+                  className="form-control"
+                  onChange={(e) => setSKU(e.target.value)}
                 />
               </div>
               <div className="mb-3">

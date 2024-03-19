@@ -34,6 +34,9 @@ const productSchema = new mongoose.Schema(
     shippng: {
       type: Boolean,
     },
+    SKU: {
+      type: String,
+    },
   },
   { timestamps: true }
 );

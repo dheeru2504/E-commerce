@@ -8,6 +8,8 @@ import {
   getOrderController,
   getAllOrderController,
   orderStatusController,
+  userOrderStatusController,
+
 } from "../controllers/authController.js";
 
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
@@ -55,5 +57,8 @@ router.put(
   isAdmin,
   orderStatusController
 );
+
+//delete order
+router.put('/user_orders/:orderId', requireSignIn, userOrderStatusController);
 
 export default router;

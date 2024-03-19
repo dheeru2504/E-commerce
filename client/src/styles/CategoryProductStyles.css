@@ -2,10 +2,12 @@
   flex-wrap: wrap;
   margin-top: 80px !important;
 }
+
 .category .card {
   background-color: rgba(128, 128, 128, 0.097);
   width: 18rem;
 }
+
 .category .card-name-price {
   display: flex;
   flex-direction: row;
@@ -16,6 +18,7 @@
   color: black;
   font-weight: bold;
 }
+
 .category button {
   border-radius: 0;
   width: 100%;
@@ -35,6 +38,6 @@
 
 .category .card-img-top {
   height: 280px !important;
-  width: 280px !important;
-  
+  width: 287px !important;
+
 }

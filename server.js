@@ -1,5 +1,4 @@
 import express from "express";
-import colors from "colors";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import mongoose from "mongoose";
@@ -11,6 +10,7 @@ import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+
 //configure env
 dotenv.config();
 
@@ -26,36 +26,37 @@ try {
 }
 
 //rest object
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 const app = express();
 
 
 const corsOptions = {
-  origin: 'http://localhost:3000',
+  origin: '*',
   method: "GET,POST,PUT,DELETE",
   credentials: true,            //access-control-allow-credentials:true
   optionSuccessStatus: 200,
+
 }
 
 //middlewares
 app.use(cors(corsOptions));
 app.use(express.json()); //earlier we uses body parser
-app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "./client/build")));
+// app.use(morgan("dev"));
+// app.use(express.static(path.join(__dirname, "./client/build")));
 
 //routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/product", productRoutes);
 
-// app.get("/", (req, res) => {
-//   res.json("hello");
-// })
+app.get("/", (req, res) => {
+  res.json("hello");
+})
 //rest api
-app.use("*", function (req, res) {
-  res.sendFile(path.join(__dirname, "./client/build/index.html"));
-});
+// app.use("*", function (req, res) {
+//   res.sendFile(path.join(__dirname, "./client/build/index.html"));
+// });
 
 //port number
 const PORT = process.env.PORT || 8080;

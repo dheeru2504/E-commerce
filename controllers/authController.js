@@ -3,6 +3,9 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import JWT from "jsonwebtoken";
 import orderModel from "../models/orderModel.js";
 
+import { sendMail } from "./emailController.js";
+
+
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, phone, address, Security_Question } =
@@ -203,7 +206,8 @@ export const getOrderController = async (req, res) => {
     const orders = await orderModel
       .find({ buyer: req.user._id })
       .populate("products", "-photo")
-      .populate("buyer", "name");
+      .populate("buyer", "name")
+      .sort({ createdAt: "-1" });
     res.json(orders);
   } catch (error) {
     //console.log(error);
@@ -254,3 +258,68 @@ export const orderStatusController = async (req, res) => {
     });
   }
 };
+
+
+//cancel order
+export const userOrderStatusController = async (req, res) => {
+  const { orderId } = req.params;
+
+  try {
+    const order = await orderModel.findById(orderId);
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: "Order not found" });
+    }
+
+    if (order.buyer.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ success: false, message: "Not authorized to cancel this order" });
+    }
+
+    if (order.status === 'Not Processed') {
+      order.status = 'Cancel'; // Assuming "Cancel" is a valid status in your schema
+      await order.save();
+
+      const buyer = await userModel.findById(order.buyer);
+      if (!buyer) {
+        return res.status(404).json({ message: "Buyer not found" });
+      }
+      const buyerEmail = buyer.email; // Assume you have the buyer's email
+      const subject = 'Order Cancellation Confirmation';
+      const text = `Your order ${orderId} has been successfully cancelled.`;
+      const html = `
+      <p>Dear ${buyer.name},</p>
+      
+      <p>We have received your request to cancel your order <strong>#${orderId}</strong>. Your order has been successfully canceled.</p>
+      
+      <h3>Refund Information:</h3>
+      <p>- If you have already made a payment, your refund will be processed within 7-10 business days. The amount will be credited back to the original method of payment.</p>
+      
+      <p>We regret any inconvenience this may have caused. If you have any questions or need further assistance, please do not hesitate to contact our customer support team.</p>
+      
+      <p>Thank you for shopping with us.</p>
+      
+      <p>Best regards,<br>
+      H Square Decor<br>
+      Customer Support<br>
+      hsqauredecor@gmail.com</p>
+      `;
+
+      await sendMail(buyerEmail, subject, text, html);
+      // console.log(buyerEmail, " ", subject, " ", text, " ", html);
+      // console.log("email sent")
+      // res.json({ message: "Order canceled successfully and email sent" })
+      res.json({ success: true, message: "Order canceled successfully", order });
+    }
+    else {
+      res.status(400).json({ success: false, message: "Order cannot be canceled at its current status" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error while updating order",
+      error: error.message,
+    });
+  }
+};
+
+

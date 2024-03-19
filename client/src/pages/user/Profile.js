@@ -28,7 +28,7 @@ const Profile = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.put("/api/v1/auth/profile", {
+      const { data } = await axios.put(`${process.env.REACT_APP_API}api/v1/auth/profile`, {
         name,
         email,
         password,
@@ -60,7 +60,7 @@ const Profile = () => {
           <div className="col-md-9 ">
             <div
               className="form-container"
-              style={{ marginTop: "-40px", borderRadius: "5px" }}
+            // style={{ marginTop: "-40px", borderRadius: "5px" }}
             >
               <form onSubmit={handleSubmit}>
                 <h4 className="title">USER PROFILE</h4>

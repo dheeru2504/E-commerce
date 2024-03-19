@@ -1,45 +1,59 @@
 .banner-img {
   margin-top: 0px;
- 
+
 }
+
 /* .container-fluid{
   margin-left: 0 !important;
    padding: 0;
 
 } */
 
+.container-fluid {
+  width: 98% !important;
+}
+
 .home-page h1 {
   color: #007185;
   font-family: "Playfair Display", serif;
-  
+
   margin: 25px;
 }
 
 .home-page {
   display: flex;
   flex-wrap: wrap;
+
+
 }
+
 .home-page .card {
   background-color: #f3f5f6;
-  width: 18rem;
+  width: 21rem;
+  border-radius: 1rem !important;
   border: none;
   font-family: 'Josefin Sans', sans-serif;
- 
+  margin: 1rem;
+
+
 }
+
 /* .home-page .card-name-price {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   
 } */
-.title a{
+.title a {
   font-weight: bold;
-  text-decoration: none ;
-  color: black ;
+  text-decoration: none;
+  color: black;
 }
-.title a:hover{
+
+.title a:hover {
   color: #19A7CE;
 }
+
 .home-page .card-price {
   color: black;
   font-weight: bold;
@@ -63,20 +77,27 @@
 
 .home-page .card img:hover {
   transform: scale(0.9);
+  transition-duration: 300ms;
+  /* transition: ease; */
+  /* transition-property: all; */
+
 }
 
 .home-page .card-img-top {
-  height: 280px !important;
-  width: 280px !important;
- 
+  height: 21rem !important;
+  width: 100% !important;
+  border-radius: 1rem 1rem 0 0;
+  transition-duration: 300ms;
 }
+
 /* ==================
 filters
 ============== */
-.filters{
+.filters {
   font-family: 'Josefin Sans', sans-serif !important;
- 
+
 }
+
 .filters h4 {
   margin-top: 100px;
   color: #007185 !important;
@@ -91,6 +112,7 @@ filters
   margin: 2px;
   color: #007185;
 }
+
 .ant-radio-wrapper {
   margin-bottom: 5px !important;
   margin-left: 10px;
@@ -105,7 +127,8 @@ filters
   margin-top: 20px;
   color: #007185;
 }
-.filters button a:hover{
+
+.filters button a:hover {
   background-color: #007185 !important;
 }
 
@@ -113,5 +136,5 @@ filters
   color: #007185;
   font-weight: bold;
   font-size: 20px !important;
-  
+
 }

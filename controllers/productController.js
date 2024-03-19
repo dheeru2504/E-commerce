@@ -1,22 +1,30 @@
 import productModel from "../models/productModel.js";
 // import orderModel from "../models/orderModel.js";
-
+import Razorpay from "razorpay";
 import fs from "fs";
 import slugify from "slugify";
 import CategoryModel from "../models/CategoryModel.js";
-
+import userModel from "../models/userModel.js";
 import braintree from "braintree";
 import dotenv from "dotenv";
 import orderModel from "../models/orderModel.js";
-
+import { get } from "http";
+import { sendMail } from "./emailController.js";
+import crypto from "crypto"
 dotenv.config();
 
 //payment gateway
-var gateway = new braintree.BraintreeGateway({
-  environment: braintree.Environment.Sandbox,
-  merchantId: process.env.BRAINTREE_MERCHANT_ID,
-  publicKey: process.env.BRAINTREE_PUBLIC_KEY,
-  privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+// var gateway = new braintree.BraintreeGateway({
+//   environment: braintree.Environment.Sandbox,
+//   merchantId: process.env.BRAINTREE_MERCHANT_ID,
+//   publicKey: process.env.BRAINTREE_PUBLIC_KEY,
+//   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
+// });
+
+//razor pay instance
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
 export const createProductController = async (req, res) => {
@@ -329,52 +337,130 @@ export const productCategoryController = async (req, res) => {
   }
 };
 
-//payment gateway api
-//token
-export const braintreeTokenController = async (req, res) => {
+// Endpoint to create an order
+export const createOrderController = async (req, res) => {
   try {
-    gateway.clientToken.generate({}, function (err, response) {
-      if (err) {
-        res.status(500).send(err);
-      } else {
-        res.send(response);
-      }
-    });
+    const options = {
+      amount: req.body.amount, // Amount in smallest currency unit, e.g., 100 paise = 1 INR
+      currency: "INR",
+      receipt: `receipt_${new Date().getTime()}`,
+    };
+
+    const order = await razorpay.orders.create(options);
+    res.json(order);
   } catch (error) {
-    //console.log(error);
+    console.error(error);
+    res.status(500).send("Error creating order");
   }
 };
 
-//payment
-export const brainTreePaymentController = async (req, res) => {
+//verify payment,
+export const verifyPaymentController = async (req, res) => {
   try {
-    const { nonce, cart } = req.body;
-    let total = 0;
-    cart.map((i) => {
-      total += i.price;
-    });
-    let newTransaction = gateway.transaction.sale(
-      {
-        amount: total,
-        paymentMethodNonce: nonce,
-        options: {
-          submitForSettlement: true,
-        },
+    const { orderCreationId, razorpayPaymentId, razorpayOrderId, razorpaySignature, cart } = req.body;
+
+    const secret = process.env.RAZORPAY_KEY_SECRET;
+
+    const shasum = crypto.createHmac('sha256', secret);
+    shasum.update(`${orderCreationId}|${razorpayPaymentId}`);
+    const digest = shasum.digest('hex');
+
+    if (digest !== razorpaySignature) {
+      return res.status(400).json({ msg: 'Transaction not legit!' });
+    }
+
+    const order = await new orderModel({
+      products: cart,
+      payment: {
+        id: razorpayPaymentId,
+        order_id: razorpayOrderId,
+        signature: razorpaySignature,
+        success : true
       },
-      function (error, result) {
-        if (result) {
-          const order = new orderModel({
-            products: cart,
-            payment: result,
-            buyer: req.user._id,
-          }).save();
-          res.json({ ok: true });
-        } else {
-          res.status(500).send(error);
-        }
-      }
-    );
+      buyer: req.user._id,
+    }).save();
+
+    res.json({ status: 'ok' });
+
   } catch (error) {
-    // console.log(error);
+    console.error(error);
+    res.status(500).send("Error verifying payment");
   }
 };
+//payment gateway api
+//token
+// export const braintreeTokenController = async (req, res) => {
+//   try {
+//     gateway.clientToken.generate({}, function (err, response) {
+//       if (err) {
+//         res.status(500).send(err);
+//       } else {
+//         res.send(response);
+//       }
+//     });
+//   } catch (error) {
+    //console.log(error);
+//   }
+// };
+
+// //payment
+// export const brainTreePaymentController = async (req, res) => {
+//   try {
+//     const { nonce, cart } = req.body;
+//     let total = cart.reduce((acc, item) => acc + item.price, 0);
+
+//     gateway.transaction.sale({
+//       amount: total.toFixed(2), // Ensure the amount is a string with two decimal places
+//       paymentMethodNonce: nonce,
+//       options: {
+//         submitForSettlement: true,
+//       },
+//     }, async (error, result) => {
+//       if (error) {
+//         return res.status(500).json({ message: "Transaction error", error });
+//       }
+//       if (result.success) {
+//         const order = await new orderModel({
+//           products: cart,
+//           payment: result,
+//           buyer: req.user._id,
+//         }).save();
+
+//         const buyer = await userModel.findById(order.buyer);
+//         if (!buyer) {
+//           return res.status(404).json({ message: "Buyer not found" });
+//         }
+
+//         const date = new Date().toISOString().split('T')[0]; // Format date as YYYY-MM-DD
+//         const buyerEmail = buyer.email;
+//         const subject = `Your Order Confirmation - ${order._id}`;
+//         const html = `
+//           <p>Dear ${buyer.name},</p>
+          
+//           <p>Thank you for shopping with us! We're excited to let you know that your order ${order._id} has been successfully placed and is now being processed. Here are the details of your purchase:</p>
+          
+//           <h3>Order Date: ${date}</h3>
+//           <p>Your order will be shipped to the address provided as soon as it is ready. You will receive a shipping confirmation email with a tracking number so you can monitor the delivery status of your order.</p>
+          
+//           <p>If you need to make any changes to your order or if you have any questions, please contact us at hsqauredecor@gmail.com.</p>
+          
+//           <p>Thank you for shopping with us.</p>
+          
+//           <p>Best regards,<br>
+//           H Square Decor<br>
+//           Customer Support<br>
+//           hsqauredecor@gmail.com</p>
+//           `;
+
+//         await sendMail(buyerEmail, subject, "", html); // Assuming sendMail is correctly implemented elsewhere
+//         res.json({ ok: true });
+//       } else {
+//         res.status(500).json({ message: "Transaction failed", result });
+//       }
+//     });
+
+//   } catch (error) {
+//     res.status(500).json({ message: "Server error", error });
+//   }
+// };
+

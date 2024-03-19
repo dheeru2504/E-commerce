@@ -23,7 +23,7 @@ const Contact = () => {
   return (
     <Layout title={"Contact Us"}>
       <div class="row align-items-center contactus register">
-        <div className="col-md-3 col-sm-6">
+        <div className="col-md-3 col-sm-5 col-6 col-lg-3">
           <h2 className=" p-2 text-center">CONTACT US</h2>
 
           <form ref={form} onSubmit={sendEmail}>

@@ -23,7 +23,7 @@ const ProductDetails = () => {
   const getProduct = async () => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API}api/v1/product/get-product/${params.slug}`
+        `${process.env.REACT_APP_API}/api/v1/product/get-product/${params.slug}`
       );
       setProduct(data?.product);
       getSimilarProduct(data?.product._id, data?.product.category._id);
@@ -35,7 +35,7 @@ const ProductDetails = () => {
   const getSimilarProduct = async (pid, cid) => {
     try {
       const { data } = await axios.get(
-        `${process.env.REACT_APP_API}api/v1/product/related-product/${pid}/${cid}`
+        `${process.env.REACT_APP_API}/api/v1/product/related-product/${pid}/${cid}`
       );
       setRelatedProducts(data?.products);
     } catch (error) {
@@ -47,7 +47,7 @@ const ProductDetails = () => {
       <div className="row container product-details">
         <div className="col-md-6">
           <img
-            src={`${process.env.REACT_APP_API}api/v1/product/product-photo/${product._id}`}
+            src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
             className="ms-5"
             alt={product.name}
             height="100%"
@@ -92,7 +92,7 @@ const ProductDetails = () => {
             <Link to={`/product/${p.slug}`} style={{ color: "grey", textDecoration: "none" }}>
               <div className="card m-2" key={p._id}>
                 <img
-                  src={`${process.env.REACT_APP_API}api/v1/product/product-photo/${p._id}`}
+                  src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
                   className="card-img-top"
                   alt={p.name}
                 />

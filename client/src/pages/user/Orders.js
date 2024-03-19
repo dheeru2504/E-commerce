@@ -15,7 +15,7 @@ const Orders = () => {
 
   const getOrders = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}api/v1/auth/orders`);
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/orders`);
       setOrders(data);
     } catch (error) {
       //console.log(error);
@@ -27,7 +27,7 @@ const Orders = () => {
     if (confirmCancellation) {
       setCancellingOrderId(orderId); // Start spinner
       try {
-        const response = await axios.put(`${process.env.REACT_APP_API}api/v1/auth/user_orders/${orderId}`, {}, {
+        const response = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/user_orders/${orderId}`, {}, {
 
         });
         if (response.data.success) {
@@ -97,7 +97,7 @@ const Orders = () => {
                       <div className="card-body orders-card-body" key={p._id}>
                         <div className="">
                           <img
-                            src={`${process.env.REACT_APP_API}api/v1/product/product-photo/${p._id}`}
+                            src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
                             className="card-img-top"
                             alt={p.name}
                           // width="100%"

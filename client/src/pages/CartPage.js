@@ -52,12 +52,12 @@ const CartPage = () => {
 
 
 
-  console.log("key = ", process.env.REACT_APP_RAZORPAY_KEY);
-  console.log("api = ", process.env.REACT_APP_API);
+  // console.log("key = ", process.env.REACT_APP_RAZORPAY_KEY);
+  // console.log("api = ", process.env.REACT_APP_API);
   // Fetch Razorpay order from backend
   const getRazorpayOrder = async () => {
     try {
-      const { data } = await axios.post(`${process.env.REACT_APP_API}api/v1/product/create-order`, { amount: totalPrice() * 100 });
+      const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-order`, { amount: totalPrice() * 100 });
       setOrder(data); // Assuming 'data.id' is the order ID from Razorpay
       console.log(order);
 
@@ -86,7 +86,7 @@ const CartPage = () => {
       handler: async (response) => {
         const { razorpay_payment_id, razorpay_order_id, razorpay_signature } = response;
         try {
-          await axios.post(`${process.env.REACT_APP_API}api/v1/product/verify-payment`, {
+          await axios.post(`${process.env.REACT_APP_API}/api/v1/product/verify-payment`, {
             orderCreationId: order.id,
             razorpayPaymentId: razorpay_payment_id,
             razorpayOrderId: razorpay_order_id,
@@ -172,7 +172,7 @@ const CartPage = () => {
                 <div className="row flex-row" key={p._id}>
                   <div className="col-md-4">
                     <img
-                      src={`${process.env.REACT_APP_API}api/v1/product/product-photo/${p._id}`}
+                      src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
                       className="cart-image"
                       alt={p.name}
 

@@ -91,8 +91,8 @@ export const loginController = async (req, res) => {
       });
     }
     //token
-    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+    const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
     });
     res.status(200).send({
       success: true,
@@ -205,7 +205,7 @@ export const getOrderController = async (req, res) => {
   try {
     const orders = await orderModel
       .find({ buyer: req.user._id })
-      .populate("products", "-photo")
+      .populate("products")
       .populate("buyer", "name")
       .sort({ createdAt: "-1" });
     res.json(orders);

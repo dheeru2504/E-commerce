@@ -172,7 +172,7 @@ const CartPage = () => {
                 <div className="row flex-row" key={p._id}>
                   <div className="col-md-4">
                     <img
-                      src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                      src={p.photo}
                       className="cart-image"
                       alt={p.name}
 

@@ -11,7 +11,17 @@ import orderModel from "../models/orderModel.js";
 import { get } from "http";
 import { sendMail } from "./emailController.js";
 import crypto from "crypto"
+// import multer from "multer";
+import { v2 as cloudinary } from 'cloudinary';
+// const cloudinary = require('cloudinary').v2;
+
+
 dotenv.config();
+
+
+// Multer configuration
+// const upload = multer({ dest: 'uploads/' }); // adjust destination as needed
+
 
 //payment gateway
 // var gateway = new braintree.BraintreeGateway({
@@ -27,11 +37,17 @@ const razorpay = new Razorpay({
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
+
 export const createProductController = async (req, res) => {
   try {
+    console.log("hello")
     const { name, description, price, category, quantity, shipping } =
-      req.fields;
-    const { photo } = req.files;
+      req.body;
+ const img = req.file;
+//  console.log(photo)
+    let photo = '';
+ 
+    
     //validation
     switch (true) {
       case !name:
@@ -44,17 +60,25 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "photo is Required and should be less then 1mb" });
+      case !img :
+        return res.status(500).send({ error: "Image is Required" });
     }
 
-    const products = new productModel({ ...req.fields, slug: slugify(name) });
-    if (photo) {
-      products.photo.data = fs.readFileSync(photo.path);
-      products.photo.contentType = photo.type;
-    }
+    // Check if an image was uploaded
+    if (req.file) {
+      // Upload image to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path);
+      photo = result.secure_url;
+      // console.log(imageUrl)
+  }
+ 
+ 
+
+    const products = new productModel({ name, description,price,category,quantity,photo, slug: slugify(name) });
+    // if (photo) {
+    //   products.photo.data = fs.readFileSync(photo.path);
+    //   products.photo.contentType = photo.type;
+    // }
     await products.save();
     res.status(201).send({
       success: true,
@@ -62,7 +86,7 @@ export const createProductController = async (req, res) => {
       products,
     });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     res.status(500).send({
       success: false,
       error,
@@ -77,7 +101,7 @@ export const getProductController = async (req, res) => {
     const products = await productModel
       .find({})
       .populate("category")
-      .select("-photo")
+      // .select("-photo")
       .limit(12)
       .sort({ createdAt: -1 });
     res.status(200).send({
@@ -101,7 +125,7 @@ export const getSingleProductController = async (req, res) => {
   try {
     const product = await productModel
       .findOne({ slug: req.params.slug })
-      .select("-photo")
+      // .select("-photo")
       .populate("category");
     res.status(200).send({
       success: true,
@@ -139,7 +163,7 @@ export const productPhotoController = async (req, res) => {
 //delete controller
 export const deleteProductController = async (req, res) => {
   try {
-    await productModel.findByIdAndDelete(req.params.pid).select("-photo");
+    await productModel.findByIdAndDelete(req.params.pid);
     res.status(200).send({
       success: true,
       message: "Product Deleted successfully",
@@ -158,8 +182,10 @@ export const deleteProductController = async (req, res) => {
 export const updateProductController = async (req, res) => {
   try {
     const { name, description, price, category, quantity, shipping } =
-      req.fields;
-    const { photo } = req.files;
+      req.body;
+    const  img  = req.file;
+    let photo='';
+    // console.log(photo)
     //validation
     switch (true) {
       case !name:
@@ -172,22 +198,30 @@ export const updateProductController = async (req, res) => {
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case photo && photo.size > 1000000:
+      case photo:
         return res
           .status(500)
-          .send({ error: "photo is Required and should be less then 1mb" });
+          .send({ error: "photo is Required" });
     }
-
+    
+    if (req.file) {
+      // Upload image to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path);
+     photo = result.secure_url;
+      // console.log(imageUrl)
+  }
     const products = await productModel.findByIdAndUpdate(
       req.params.pid,
-      { ...req.fields, slug: slugify(name) },
+      { name, description,price,category,quantity,photo,shipping, slug: slugify(name) },
       { new: true }
     );
-    if (photo) {
-      products.photo.data = fs.readFileSync(photo.path);
-      products.photo.contentType = photo.type;
-    }
+    // if (photo) {
+    //   products.photo.data = fs.readFileSync(photo.path);
+    //   products.photo.contentType = photo.type;
+    // }
+    console.log(photo)
     await products.save();
+    // console.log(products)
     res.status(201).send({
       success: true,
       message: "Product Updated Successfully",
@@ -250,7 +284,7 @@ export const productListController = async (req, res) => {
     const page = req.params.page ? req.params.page : 1;
     const products = await productModel
       .find({})
-      .select("-photo")
+      // .select("-photo")
       .skip((page - 1) * perPage)
       .limit(perPage)
       .sort({ createdAt: -1 });
@@ -279,7 +313,7 @@ export const searchProductController = async (req, res) => {
           { description: { $regex: keyword, $options: "i" } },
         ],
       })
-      .select("-photo");
+      // .select("-photo");
     res.json(resutls);
   } catch (error) {
     //console.log(error);
@@ -300,7 +334,7 @@ export const realtedProductController = async (req, res) => {
         category: cid,
         _id: { $ne: pid },
       })
-      .select("-photo")
+      // .select("-photo")
       .limit(3)
       .populate("category");
     res.status(200).send({

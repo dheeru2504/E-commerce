@@ -33,7 +33,7 @@
 }
 
 .similar-products .card-price {
-  color: skyblue;
+  /* color: skyblue; */
   font-weight: bold;
 }
 
@@ -52,10 +52,12 @@
 
 .similar-products .card img:hover {
   transform: scale(0.9);
+  transition-duration: 300ms;
 }
 
 .similar-products .card-img-top {
   height: 280px !important;
   width: 287px !important;
+  transition-duration: 300ms;
 
 }

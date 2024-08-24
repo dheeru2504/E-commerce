@@ -10,11 +10,17 @@ import productRoutes from "./routes/productRoutes.js";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-
+import { v2 as cloudinary } from 'cloudinary';
 //configure env
 dotenv.config();
 
 //database configuration
+
+cloudinary.config({
+  cloud_name: 'dgdufs4ek',
+  api_key: '947789948839289',
+  api_secret: 'alB2lzv9_6FnTH5O_OWoYx3y2X0'
+});
 
 try {
   const conn = await mongoose.connect(process.env.MONGO_URL, {
@@ -64,8 +70,9 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, async () => {
   try {
     await connectDB();
+    console.log("connected to db")
   } catch (error) {
-    // console.log(`Error in Mongodb ${error}`.bgRed.white);
+    console.log(`Error in Mongodb ${error}`.bgRed.white);
   }
   console.log(`server started on PORT ${PORT}`);
 });

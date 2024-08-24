@@ -28,8 +28,8 @@ const productSchema = new mongoose.Schema(
       require: true,
     },
     photo: {
-      data: Buffer,
-      contentType: String,
+      type: String,
+      // require: true,
     },
     shippng: {
       type: Boolean,
@@ -42,3 +42,4 @@ const productSchema = new mongoose.Schema(
 );
 
 export default mongoose.model("Products", productSchema);
+

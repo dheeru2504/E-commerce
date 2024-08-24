@@ -68,8 +68,13 @@ const UpdateProduct = () => {
       productData.append("description", description);
       productData.append("price", price);
       productData.append("quantity", quantity);
-      photo && productData.append("photo", photo);
+      // photo && productData.append("photo", photo);
       productData.append("category", category);
+      if (photo) {
+        console.log(photo)
+        productData.append('photo', photo);
+      }
+      // console.log(productData)
       const { data } = axios.put(
         `${process.env.REACT_APP_API}/api/v1/product/update-product/${id}`,
         productData
@@ -89,8 +94,8 @@ const UpdateProduct = () => {
   //delete a product
   const handleDelete = async () => {
     try {
-      let answer = window.prompt("Are You Sure want to delete this product ? ");
-      if (!answer) return;
+      // let answer = window.prompt("Are You Sure want to delete this product ? ");
+      // if (!answer) return;
       const { data } = await axios.delete(
         `${process.env.REACT_APP_API}/api/v1/product/delete-product/${id}`
       );

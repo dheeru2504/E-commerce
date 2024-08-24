@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Layout from "../../components/layouts/Layout";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../../styles/AuthStyles.css";
 
 const Register = () => {
@@ -123,6 +123,7 @@ const Register = () => {
             Submit
           </button>
         </form>
+        <Link className="m-4" to="/login" style={{ textDecoration: "none", color: "grey" }}> Login</Link>
       </div>
     </Layout>
   );

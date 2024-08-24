@@ -85,6 +85,7 @@ const HomePage = () => {
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`);
       setLoading(false);
       setProducts(data.products);
+      console.log(products)
     } catch (error) {
       setLoading(false);
       // console.log(error);
@@ -250,7 +251,7 @@ const HomePage = () => {
                 <div className="card text-center m-2" key={p._id}>
 
                   <img
-                    src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                    src={p.photo}
                     className="card-img-top"
                     alt={p.name}
                   />

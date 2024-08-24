@@ -1,23 +1,9 @@
 import express from "express";
-// import {
-//   brainTreePaymentController,
-//   braintreeTokenController,
-//   createProductController,
-//   deleteProductController,
-//   getProductController,
-//   getSingleProductController,
-//   productCategoryController,
-//   productCountController,
-//   productFiltersController,
-//   productListController,
-//   productPhotoController,
-//   realtedProductController,
-//   searchProductController,
-//   updateProductController,
-// } from "../controllers/productController.js";
+import multer from "multer";
+
 
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
-import formidable from "express-formidable";
+// import formidable from "express-formidable";
 import {
   // brainTreePaymentController,
   // braintreeTokenController,
@@ -38,13 +24,26 @@ import {
 } from "../controllers/productController.js";
 
 const router = express.Router();
+// Multer configuration
+// Multer configuration
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  }
+});
+
+const upload = multer({ storage });
+// adjust destination as needed
 
 //routes
 router.post(
   "/create-product",
   requireSignIn,
   isAdmin,
-  formidable(),
+  upload.single('photo'),
   createProductController
 );
 //Update profduct route
@@ -52,7 +51,7 @@ router.put(
   "/update-product/:pid",
   requireSignIn,
   isAdmin,
-  formidable(),
+  upload.single('photo'),
   updateProductController
 );
 
@@ -63,7 +62,7 @@ router.get("/get-product", getProductController);
 router.get("/get-product/:slug", getSingleProductController);
 
 //get photo
-router.get("/product-photo/:pid", productPhotoController);
+// router.get("/product-photo/:pid", productPhotoController);
 
 //delete rproduct
 router.delete("/delete-product/:pid", deleteProductController);

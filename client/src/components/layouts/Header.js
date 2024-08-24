@@ -24,6 +24,7 @@ const Header = () => {
       token: "",
     });
     localStorage.removeItem("auth");
+    localStorage.removeItem("token");
     toast.success("Logout successfully");
   };
   return (
@@ -78,7 +79,7 @@ const Header = () => {
                 ))} */}
               </li>
 
-              {!auth?.user ? (
+              {!auth.user ? (
                 <>
                   {/* <li className="nav-item">
                     <NavLink to="/register" className="nav-link">

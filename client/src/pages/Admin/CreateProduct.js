@@ -19,6 +19,17 @@ const CreateProduct = () => {
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
 
+  // const [productData, setProductData] = useState({
+  //   name: '',
+  //   description: '',
+  //   price: '',
+  //   SKU: '',
+  //   quantity: '',
+  //   shipping: '',
+  //   category: '',
+  //   photo: null
+  // });
+
   //get all category
   const getAllCategory = async () => {
     try {
@@ -40,20 +51,41 @@ const CreateProduct = () => {
   const handleCreate = async (e) => {
     e.preventDefault();
     try {
-      const productData =
+      const formData =
         new FormData(); /*form data is browser property to get form data*/
-      productData.append("name", name);
-      productData.append("description", description);
-      productData.append("price", price);
-      productData.append("SKU", SKU);
-      productData.append("quantity", quantity);
-      productData.append("photo", photo);
-      productData.append("category", category);
-      const { data } = axios.post(
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('price', price);
+      formData.append('SKU', SKU);
+      formData.append('quantity', quantity);
+      formData.append('shipping', shipping);
+      formData.append('category', category);
+
+      // Append the photo file (if selected) to the formData object
+      if (photo) {
+        formData.append('photo', photo);
+      }
+      // const productData = {
+      //   name,
+      //   description,
+      //   price,
+      //   SKU,
+      //   category,
+      //   quantity,
+      //   photo
+      // };
+      // console.log(formData)
+
+      const { data } = await axios.post(
         `${process.env.REACT_APP_API}/api/v1/product/create-product`,
-        productData
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
       );
-      if (data?.success) {
+      if (!data?.success) {
         toast.error(data?.message);
       } else {
         toast.success("Product Created Successfully");

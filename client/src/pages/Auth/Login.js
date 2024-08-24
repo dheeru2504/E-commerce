@@ -34,6 +34,7 @@ const Login = () => {
           token: res.data.token,
         });
         localStorage.setItem("auth", JSON.stringify(res.data));
+        localStorage.setItem("token", res.data.token);
         navigate(location.state || "/");
       } else {
         toast.error(res.data.message);
@@ -72,7 +73,13 @@ const Login = () => {
               required
             />
           </div>
-          <div className="mb-3">
+
+          <div>
+            <button type="submit" className="btn btn-info">
+              Login
+            </button>
+          </div>
+          <div className="mt-3">
             <button
               type="submit"
               className="btn btn-info"
@@ -83,16 +90,12 @@ const Login = () => {
               Forgot Password
             </button>
           </div>
-          <div>
-            <button type="submit" className="btn btn-info">
-              Login
-            </button>
-          </div>
         </form>
 
         <Link to="/register" className="btn btn-outline-info mt-4">
           Sign up
         </Link>
+
       </div>
     </Layout>
   );

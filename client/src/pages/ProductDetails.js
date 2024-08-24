@@ -47,7 +47,7 @@ const ProductDetails = () => {
       <div className="row container product-details">
         <div className="col-md-6">
           <img
-            src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`}
+            src={product.photo}
             className="ms-5"
             alt={product.name}
             height="100%"
@@ -92,7 +92,7 @@ const ProductDetails = () => {
             <Link to={`/product/${p.slug}`} style={{ color: "grey", textDecoration: "none" }}>
               <div className="card m-2" key={p._id}>
                 <img
-                  src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                  src={p.photo}
                   className="card-img-top"
                   alt={p.name}
                 />

@@ -13,7 +13,7 @@ const returnFaq = [
     {
         id: 'return_3',
         question: 'How do I initiate a return?',
-        answer: 'To initiate a return, please contact our customer service team at hsqauredecor@gmail.com with your order number and the reason for the return. We will provide you with a return authorization and instructions on how to proceed.',
+        answer: 'To initiate a return, please contact our customer service team at helpinghendd@gmail.com with your order number and the reason for the return. We will provide you with a return authorization and instructions on how to proceed.',
     },
     {
         id: 'return_4',
@@ -33,7 +33,7 @@ const returnFaq = [
     {
         id: 'return_7',
         question: 'What should I do if I receive a damaged or incorrect item?',
-        answer: 'If you receive a damaged or incorrect item, please contact us at hsqauredecor@gmail.com within 48 hours of delivery with a description and photos of the issue. We will address the problem as quickly as possible.',
+        answer: 'If you receive a damaged or incorrect item, please contact us at helpinghendd@gmail.com within 48 hours of delivery with a description and photos of the issue. We will address the problem as quickly as possible.',
     },
     {
         id: 'return_8',
@@ -43,7 +43,7 @@ const returnFaq = [
     {
         id: 'return_9',
         question: 'How can I check the status of my return or refund?',
-        answer: 'You can check the status of your return or refund by contacting our customer service team at hsqauredecor@gmail.com. Please include your order number for reference.',
+        answer: 'You can check the status of your return or refund by contacting our customer service team at helpinghendd@gmail.com. Please include your order number for reference.',
     },
 
 ];

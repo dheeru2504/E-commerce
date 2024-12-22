@@ -33,6 +33,7 @@ const UpdateProduct = () => {
       setQuantity(data.product.quantity);
       setShipping(data.product.shipping);
       setCategory(data.product.category._id);
+      setPhoto(data.product.photo);
     } catch (error) {
       //  console.log(error);
     }
@@ -71,7 +72,7 @@ const UpdateProduct = () => {
       // photo && productData.append("photo", photo);
       productData.append("category", category);
       if (photo) {
-        console.log(photo)
+        // console.log(photo)
         productData.append('photo', photo);
       }
       // console.log(productData)
@@ -134,8 +135,8 @@ const UpdateProduct = () => {
                 ))}
               </Select>
               <div className="mb-3">
-                <label className="btn btn-outline-secondary col-md-12">
-                  {photo ? photo.name : "Upload Photo"}
+                <label className="btn btn-outline-secondary col-md-12" >
+                  Upload Image
                   <input
                     type="file"
                     name="photo"
@@ -149,22 +150,23 @@ const UpdateProduct = () => {
                 {photo ? (
                   <div className="text-center">
                     <img
-                      src={URL.createObjectURL(photo)}
+                      src={photo}
                       alt="product_photo"
                       height={"200px"}
                       className="img img-responsive"
                     />
                   </div>
-                ) : (
-                  <div className="text-center">
-                    <img
-                      src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${id}`}
-                      alt="product_photo"
-                      height={"200px"}
-                      className="img img-responsive"
-                    />
-                  </div>
-                )}
+                ) :
+                  (
+                    <div className="text-center">
+                      <img
+                        src={"a"}
+                        alt="product_photo"
+                        height={"200px"}
+                        className="img img-responsive"
+                      />
+                    </div>
+                  )}
               </div>
               <div className="mb-3">
                 <input

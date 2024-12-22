@@ -29,6 +29,7 @@ import Faqs from "./pages/Faqs";
 import TermsOfUse from "./pages/TermsOfUse";
 import ReturnPolicy from "./pages/ReturnPolicy";
 import TrackShipment from "./pages/TrackShipment";
+import BulkUpload from "./pages/Admin/BulkCreateProduct";
 
 function App() {
   return (
@@ -55,6 +56,10 @@ function App() {
           <Route
             path="admin/create-product"
             element={<CreateProduct />}
+          ></Route>
+          <Route
+            path="admin/bulk-create-product"
+            element={<BulkUpload />}
           ></Route>
           <Route path="admin/product/:slug" element={<UpdateProduct />}></Route>
           <Route path="admin/users" element={<Users />}></Route>

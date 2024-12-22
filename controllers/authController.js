@@ -224,7 +224,7 @@ export const getAllOrderController = async (req, res) => {
   try {
     const orders = await orderModel
       .find({})
-      .populate("products", "-photo")
+      .populate("products")
       .populate("buyer", "name")
       .sort({ createdAt: "-1" });
     res.json(orders);
@@ -301,7 +301,7 @@ export const userOrderStatusController = async (req, res) => {
       <p>Best regards,<br>
       H Square Decor<br>
       Customer Support<br>
-      hsqauredecor@gmail.com</p>
+      helpinghendd@gmail.com</p>
       `;
 
       await sendMail(buyerEmail, subject, text, html);

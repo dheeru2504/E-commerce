@@ -2,14 +2,15 @@ import productModel from "../models/productModel.js";
 // import orderModel from "../models/orderModel.js";
 import Razorpay from "razorpay";
 import fs from "fs";
+import xlsx from "xlsx";
 import slugify from "slugify";
 import CategoryModel from "../models/CategoryModel.js";
 import userModel from "../models/userModel.js";
-import braintree from "braintree";
 import dotenv from "dotenv";
 import orderModel from "../models/orderModel.js";
 import { get } from "http";
 import { sendMail } from "./emailController.js";
+import mongoose from "mongoose";
 import crypto from "crypto"
 // import multer from "multer";
 import { v2 as cloudinary } from 'cloudinary';
@@ -41,26 +42,26 @@ const razorpay = new Razorpay({
 export const createProductController = async (req, res) => {
   try {
     console.log("hello")
-    const { name, description, price, category, quantity, shipping } =
+    const { name, description, price, category, quantity, shipping, isFeatured } =
       req.body;
- const img = req.file;
-//  console.log(photo)
+    const img = req.file;
+    //  console.log(photo)
     let photo = '';
- 
-    
+
+
     //validation
     switch (true) {
       case !name:
         return res.status(500).send({ error: "Name is Required" });
-      case !description:
-        return res.status(500).send({ error: "Description is Required" });
+      // case !description:
+      //   return res.status(500).send({ error: "Description is Required" });
       case !price:
         return res.status(500).send({ error: "Price is Required" });
       case !category:
         return res.status(500).send({ error: "Category is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case !img :
+      case !img:
         return res.status(500).send({ error: "Image is Required" });
     }
 
@@ -70,11 +71,11 @@ export const createProductController = async (req, res) => {
       const result = await cloudinary.uploader.upload(req.file.path);
       photo = result.secure_url;
       // console.log(imageUrl)
-  }
- 
- 
+    }
 
-    const products = new productModel({ name, description,price,category,quantity,photo, slug: slugify(name) });
+
+
+    const products = new productModel({ name, description, price, category, quantity, photo, slug: slugify(name), isFeatured });
     // if (photo) {
     //   products.photo.data = fs.readFileSync(photo.path);
     //   products.photo.contentType = photo.type;
@@ -103,7 +104,31 @@ export const getProductController = async (req, res) => {
       .populate("category")
       // .select("-photo")
       .limit(12)
-      .sort({ createdAt: -1 });
+      .sort({ isFeatured: -1, createdAt: -1 });
+    res.status(200).send({
+      success: true,
+      counTotal: products.length,
+      message: "ALl Products ",
+      products,
+    });
+  } catch (error) {
+    // console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Erorr in getting products",
+      error: error.message,
+    });
+  }
+};
+
+//get all products
+export const getProductControllerAdmin = async (req, res) => {
+  try {
+    const products = await productModel
+      .find({})
+      .populate("category")
+      // .select("-photo")
+      .sort({ isFeatured: -1, createdAt: -1 });
     res.status(200).send({
       success: true,
       counTotal: products.length,
@@ -178,13 +203,13 @@ export const deleteProductController = async (req, res) => {
   }
 };
 
-//upate producta
+//upate products
 export const updateProductController = async (req, res) => {
   try {
     const { name, description, price, category, quantity, shipping } =
       req.body;
-    const  img  = req.file;
-    let photo='';
+    const img = req.file;
+    let photo = '';
     // console.log(photo)
     //validation
     switch (true) {
@@ -203,16 +228,16 @@ export const updateProductController = async (req, res) => {
           .status(500)
           .send({ error: "photo is Required" });
     }
-    
+
     if (req.file) {
       // Upload image to Cloudinary
       const result = await cloudinary.uploader.upload(req.file.path);
-     photo = result.secure_url;
+      photo = result.secure_url;
       // console.log(imageUrl)
-  }
+    }
     const products = await productModel.findByIdAndUpdate(
       req.params.pid,
-      { name, description,price,category,quantity,photo,shipping, slug: slugify(name) },
+      { name, description, price, category, quantity, photo, shipping, slug: slugify(name) },
       { new: true }
     );
     // if (photo) {
@@ -313,7 +338,7 @@ export const searchProductController = async (req, res) => {
           { description: { $regex: keyword, $options: "i" } },
         ],
       })
-      // .select("-photo");
+    // .select("-photo");
     res.json(resutls);
   } catch (error) {
     //console.log(error);
@@ -409,7 +434,7 @@ export const verifyPaymentController = async (req, res) => {
         id: razorpayPaymentId,
         order_id: razorpayOrderId,
         signature: razorpaySignature,
-        success : true
+        success: true
       },
       buyer: req.user._id,
     }).save();
@@ -433,7 +458,7 @@ export const verifyPaymentController = async (req, res) => {
 //       }
 //     });
 //   } catch (error) {
-    //console.log(error);
+//console.log(error);
 //   }
 // };
 
@@ -470,20 +495,20 @@ export const verifyPaymentController = async (req, res) => {
 //         const subject = `Your Order Confirmation - ${order._id}`;
 //         const html = `
 //           <p>Dear ${buyer.name},</p>
-          
+
 //           <p>Thank you for shopping with us! We're excited to let you know that your order ${order._id} has been successfully placed and is now being processed. Here are the details of your purchase:</p>
-          
+
 //           <h3>Order Date: ${date}</h3>
 //           <p>Your order will be shipped to the address provided as soon as it is ready. You will receive a shipping confirmation email with a tracking number so you can monitor the delivery status of your order.</p>
-          
-//           <p>If you need to make any changes to your order or if you have any questions, please contact us at hsqauredecor@gmail.com.</p>
-          
+
+//           <p>If you need to make any changes to your order or if you have any questions, please contact us at helpinghendd@gmail.com.</p>
+
 //           <p>Thank you for shopping with us.</p>
-          
+
 //           <p>Best regards,<br>
 //           H Square Decor<br>
 //           Customer Support<br>
-//           hsqauredecor@gmail.com</p>
+//           helpinghendd@gmail.com</p>
 //           `;
 
 //         await sendMail(buyerEmail, subject, "", html); // Assuming sendMail is correctly implemented elsewhere
@@ -497,4 +522,98 @@ export const verifyPaymentController = async (req, res) => {
 //     res.status(500).json({ message: "Server error", error });
 //   }
 // };
+
+
+/**
+ * Bulk upload products controller
+ */
+
+export const bulkUploadProducts = async (req, res) => {
+  try {
+    console.log("first")
+    if (!req.file) {
+      return res.status(400).send({ success: false, message: "Excel file is required" });
+    }
+
+    // Read the Excel file
+    const workbook = xlsx.readFile(req.file.path);
+    const sheetName = workbook.SheetNames[0];
+    const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
+
+    if (!sheetData.length) {
+      return res.status(400).send({ success: false, message: "Excel file is empty" });
+    }
+
+    const products = [];
+
+    // Process each row
+    for (const row of sheetData) {
+      if (!mongoose.Types.ObjectId.isValid(row.category)) {
+        throw new Error(`Invalid category ID: ${row.category}`);
+      }
+      const {
+        name,
+        SKU,
+        description,
+        price,
+        category,
+        quantity,
+        shipping,
+        isFeatured,
+
+        image_path, // Assume Excel has a column named `image_path` for image file paths
+      } = row;
+
+      // Validation for required fields
+      if (!name || !price || !category || !quantity || !image_path) {
+        return res.status(400).send({
+          success: false,
+          message: "Missing required fields in Excel",
+          row,
+        });
+      }
+
+      const localImagePath = row.image_path.trim().replace(/^"|"$/g, ''); // Remove any surrounding quotes
+
+      // Upload the image to Cloudinary
+      const result = await cloudinary.uploader.upload(localImagePath);
+      // console.log(image_path)
+      // Add product to the list
+      products.push({
+        name,
+        SKU,
+        description,
+        price,
+        category,
+        quantity,
+        shipping: shipping || false,
+        isFeatured: isFeatured || false,
+        photo: result.secure_url,
+        // photo: image_path,
+        slug: slugify(name),
+      });
+    }
+
+    // Insert all products in one go
+    await productModel.insertMany(products);
+
+    res.status(201).send({
+      success: true,
+      message: `${products.length} Products Uploaded Successfully`,
+      products,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send({
+      success: false,
+      message: "Error in bulk uploading products",
+      error,
+    });
+  } finally {
+    // Clean up uploaded Excel file from server
+    if (req.file && req.file.path) {
+      fs.unlinkSync(req.file.path);
+    }
+  }
+};
 

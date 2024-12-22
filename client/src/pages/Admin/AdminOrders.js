@@ -53,7 +53,7 @@ const AdminOrders = () => {
           <h1 className="text-center font-type">All Orders</h1>
           {orders?.map((o, i) => {
             return (
-              <div className=" mb-3">
+              <div className=" mb-3" key={o._id}>
                 <div className="card ">
                   <div className="card-header orders">
                     <div className="">

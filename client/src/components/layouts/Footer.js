@@ -30,9 +30,10 @@ const Footer = () => {
                   <p>
                     Najibabad , Bijnor <br />
                     Uttar Pradesh, India<br /><br />
+
+                    <strong>Phone:</strong> +91 8449257926<br />
                     <strong>Phone:</strong> +91 7088257926<br />
-                    <strong>Phone:</strong> +91 7668114043<br />
-                    <strong>Email: </strong><a href="mailto:hsqauredecor@gmail.com" style={{ textDecoration: "none", color: "white" }}>hsqauredecor@gmail.com</a> <br />
+                    <strong>Email: </strong><a href="mailto:helpinghendd@gmail.com" style={{ textDecoration: "none", color: "white" }}>helpinghendd@gmail.com</a> <br />
 
                   </p>
                   <div className="social-links mt-3">
@@ -79,7 +80,7 @@ const Footer = () => {
 
             </div>
             <div className="copyright">
-              © Copyright <strong><span>H Square Decor</span></strong>. All Rights Reserved
+              © Copyright <strong><span>Helping Hand</span></strong>. All Rights Reserved
             </div>
           </div>
         </div>

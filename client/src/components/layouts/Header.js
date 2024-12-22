@@ -10,7 +10,8 @@ import SearchInput from "../Form/SearchInput";
 import useCategory from "../../hooks/useCategory";
 import { useCart } from "../../context/cart";
 import { Badge } from "antd";
-import Logo from "../../assets/Logo.jpeg"
+// import Logo from "../../assets/Logo.jpeg"
+import Logo from "../../assets/Logo.png"
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -45,7 +46,7 @@ const Header = () => {
 
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <Link to="/" className="navbar-brand">
-              <img src={Logo} alt="" className="logo" /><span style={{ fontSize: "1.2rem" }}>Decor</span>
+              <img src={Logo} alt="" className="logo" /><span style={{ fontSize: "1.2rem" }}>Helping Hand</span>
             </Link>
 
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">

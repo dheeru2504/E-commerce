@@ -81,11 +81,13 @@ const HomePage = () => {
   //get products
   const getAllProducts = async () => {
     try {
+      console.log("get all products")
       setLoading(true);
       const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`);
       setLoading(false);
+      console.log("data : ", data)
       setProducts(data.products);
-      console.log(products)
+      console.log("products are ", products)
     } catch (error) {
       setLoading(false);
       // console.log(error);
@@ -160,7 +162,7 @@ const HomePage = () => {
     }
   };
   return (
-    <Layout title={"ALl Products - Best offers "}>
+    <Layout title={"Helping Hand"}>
       {/* banner image */}
       {/* <img
         src="/images/banner.jpg"
@@ -168,7 +170,7 @@ const HomePage = () => {
         alt="bannerimage"
         width={"100%"}
       /> */}
-      <div className="carousel-section">
+      {/* <div className="carousel-section">
         <Carousel
           responsive={responsive}
           infinite={true}
@@ -206,7 +208,7 @@ const HomePage = () => {
 
 
         </Carousel>
-      </div>
+      </div> */}
       {/* banner image */}
       <div className="container-fluid row home-page ">
         <h1 className="text-center ">Shop Now</h1>

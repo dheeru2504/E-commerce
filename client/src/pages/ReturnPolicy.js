@@ -20,7 +20,7 @@ const ReturnPolicy = () => {
                     <p className='fw-bold'>How to Return</p>
                     <p>To initiate a return, please follow these steps:</p>
                     <ol>
-                        <li>Contact our customer service team at hsqauredecor@gmail.com to request a return authorization. Please include your order number and the reason for the return.</li>
+                        <li>Contact our customer service team at helpinghendd@gmail.com to request a return authorization. Please include your order number and the reason for the return.</li>
                         <li>Once your return is authorized, you will receive instructions on how to ship the item back to us. Please note that you are responsible for the return shipping costs unless the return is due to a defect or an error on our part.</li>
                         <li>Pack the item securely in its original packaging and include a copy of the return authorization email.</li>
                         <li>Ship the item using a trackable shipping method to the address provided by our customer service team.</li>
@@ -30,9 +30,9 @@ const ReturnPolicy = () => {
                     <p className='fw-bold'>Exchanges</p>
                     <p>If you wish to exchange an item, please follow the return process to return the original item and place a new order for the item you would like instead.</p>
                     <p className='fw-bold'>Damaged or Incorrect Items</p>
-                    <p>If you receive a damaged or incorrect item, please contact us at hsqauredecor@gmail.com within 48 hours of delivery with a description and photos of the issue. We will work with you to resolve the issue as quickly as possible.</p>
+                    <p>If you receive a damaged or incorrect item, please contact us at helpinghendd@gmail.com within 48 hours of delivery with a description and photos of the issue. We will work with you to resolve the issue as quickly as possible.</p>
                     <p className='fw-bold'>Contact Us</p>
-                    <p>If you have any questions or concerns about our return policy or need assistance with a return, please contact us at hsqauredecor@gmail.com. We are here to help!</p>
+                    <p>If you have any questions or concerns about our return policy or need assistance with a return, please contact us at helpinghendd@gmail.com. We are here to help!</p>
 
 
                 </div>

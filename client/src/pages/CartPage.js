@@ -79,7 +79,7 @@ const CartPage = () => {
       key: process.env.REACT_APP_RAZORPAY_KEY,
       amount: order.amount, // Assuming totalPrice returns total in Rupees, convert to Paise
       currency: order.currency,
-      name: 'H Square Decor',
+      name: 'Helping Hand',
       description: 'Test Transaction',
       // image: { Logo },
       order_id: order.id, // Use Razorpay order ID here

@@ -48,7 +48,7 @@ const Policy = () => {
           <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We encourage you to review this Privacy Policy periodically for any updates.</p>
           <p> </p>
           <p className="fw-bold">Contact Us</p>
-          <p>If you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us at  hsqauredecor.com.</p>
+          <p>If you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us at  helpinghendd.com.</p>
         </div>
       </div>
     </Layout>

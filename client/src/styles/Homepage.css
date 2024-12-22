@@ -90,6 +90,28 @@
   transition-duration: 300ms;
 }
 
+/* @media screen and (max-width: 560px) {
+  .home-page .card-img-top {
+    height: 18rem !important;
+    width: 70% !important;
+    border-radius: 1rem 1rem 0 0;
+    transition-duration: 300ms;
+    
+  }
+
+  .home-page .card {
+    background-color: #f3f5f6;
+    width: 70%;
+    border-radius: 1rem !important;
+    border: none;
+    font-family: 'Josefin Sans', sans-serif;
+    margin: 1rem;
+  
+  
+  }
+
+  } */
+
 /* ==================
 filters
 ============== */

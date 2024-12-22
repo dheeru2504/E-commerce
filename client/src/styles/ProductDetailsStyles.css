@@ -61,3 +61,16 @@
   transition-duration: 300ms;
 
 }
+
+
+@media screen and (max-width: 566px) {
+  .product-details-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  
+  }
+  
+
+  }

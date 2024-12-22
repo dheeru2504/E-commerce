@@ -18,6 +18,8 @@ const CreateProduct = () => {
   const [quantity, setQuantity] = useState("");
   const [shipping, setShipping] = useState("");
   const [photo, setPhoto] = useState("");
+  const [isFeatured, setIsFeatured] = useState("");
+  // const [priority, setPriority] = useState("");
 
   // const [productData, setProductData] = useState({
   //   name: '',
@@ -60,6 +62,7 @@ const CreateProduct = () => {
       formData.append('quantity', quantity);
       formData.append('shipping', shipping);
       formData.append('category', category);
+      formData.append('isFeatured', isFeatured);
 
       // Append the photo file (if selected) to the formData object
       if (photo) {
@@ -215,6 +218,22 @@ const CreateProduct = () => {
                   <Option value="1">Yes</Option>
                 </Select>
               </div>
+              <div className="mb-3">
+                <Select
+                  bordered={false}
+                  placeholder="Is Featured"
+                  size="large"
+                  showSearch
+                  className="form-select mb-3"
+                  onChange={(value) => {
+                    setIsFeatured(value);
+                  }}
+                >
+                  <Option value="0">No</Option>
+                  <Option value="1">Yes</Option>
+                </Select>
+              </div>
+
               <div className="mb-3">
                 <button className="btn btn-outline-info" onClick={handleCreate}>
                   CREATE PRODUCT

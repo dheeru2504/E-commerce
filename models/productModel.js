@@ -31,11 +31,19 @@ const productSchema = new mongoose.Schema(
       type: String,
       // require: true,
     },
-    shippng: {
+    shipping: {
       type: Boolean,
     },
     SKU: {
       type: String,
+    },
+    isFeatured: {
+      type: Boolean,
+      default: false, // Mark if this is a "best product"
+    },
+    priority: {
+      type: Number,
+      default: 0, // Higher numbers indicate higher priority
     },
   },
   { timestamps: true }

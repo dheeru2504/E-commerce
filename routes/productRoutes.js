@@ -5,12 +5,14 @@ import multer from "multer";
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 // import formidable from "express-formidable";
 import {
+  bulkUploadProducts,
   // brainTreePaymentController,
   // braintreeTokenController,
   createOrderController,
   createProductController,
   deleteProductController,
   getProductController,
+  getProductControllerAdmin,
   getSingleProductController,
   productCategoryController,
   productCountController,
@@ -39,6 +41,7 @@ const upload = multer({ storage });
 // adjust destination as needed
 
 //routes
+//create product
 router.post(
   "/create-product",
   requireSignIn,
@@ -46,6 +49,9 @@ router.post(
   upload.single('photo'),
   createProductController
 );
+//bulk upload products
+router.post("/bulk-create-product", requireSignIn,
+  isAdmin, upload.single("file"), bulkUploadProducts);
 //Update profduct route
 router.put(
   "/update-product/:pid",
@@ -57,6 +63,8 @@ router.put(
 
 //get products
 router.get("/get-product", getProductController);
+//get products for Admin
+router.get("/get-product-admin", getProductControllerAdmin);
 
 //single product
 router.get("/get-product/:slug", getSingleProductController);
@@ -65,7 +73,8 @@ router.get("/get-product/:slug", getSingleProductController);
 // router.get("/product-photo/:pid", productPhotoController);
 
 //delete rproduct
-router.delete("/delete-product/:pid", deleteProductController);
+router.delete("/delete-product/:pid", requireSignIn,
+  isAdmin, deleteProductController);
 
 //filter product
 router.post("/product-filters", productFiltersController);
